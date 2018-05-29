@@ -1,0 +1,10 @@
+#!/bin/bash -Ceu
+REDPEN_HOME="/redpen"
+
+if [ $# -ge 1 ]; then
+  $REDPEN_HOME/bin/redpen -f latex -r xml -c $REDPEN_HOME/redpen-conf.xml $1 2>/dev/null
+else
+  $REDPEN_HOME/bin/redpen -f latex -r xml -c $REDPEN_HOME/redpen-conf.xml /dev/stdin 2>/dev/null
+fi
+
+exit $?

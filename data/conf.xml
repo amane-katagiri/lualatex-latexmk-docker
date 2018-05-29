@@ -1,0 +1,71 @@
+<redpen-conf lang="ja">
+    <validators>
+        <!-- Critical Validators
+          形にして出す以上必要そうなヤツ
+        -->
+        <validator name="CommaNumber" level="error">
+            <property name="max_num" value="5" />
+        </validator>
+        <validator name="DoubledConjunctiveParticleGa" level="error" />
+        <validator name="EmptySection" level="error" />
+        <validator name="EvenSymbols" level="error" />
+        <validator name="GappedSection" level="error" />
+        <validator name="HankakuAlphabet" level="error" />
+        <validator name="HankakuKana" level="error" />
+        <validator name="InvalidSymbol" level="error" />
+        <validator name="LongKanjiChain" level="error">
+            <property name="max_len" value="8" />
+        </validator>
+        <validator name="OrphanedMinusSign" level="error" />
+        <validator name="ParenthesizedSentence" level="error">
+            <property name="max_nesting_level" value="1" />
+            <property name="max_count" value="3" />
+            <property name="max_length" value="24" />
+        </validator>
+        <validator name="RedundantFullStop" level="error" />
+        <validator name="RedundantComma" level="error" />
+        <validator name="SectionLevel" level="error">
+            <property name="max_num" value="3" />
+        </validator>
+        <validator name="SentenceLength" level="error">
+            <property name="max_len" value="80" />
+        </validator>
+        <validator name="SpaceBetweenAlphabeticalWord" level="error">
+            <property name="forbidden" value="true" />
+        </validator>
+        <validator name="SuggestExpression" level="error">
+            <property name="dict" value="dict/suggestExpression.dic" />
+        </validator>
+
+
+        <!-- Recommendation Validators
+          守れるといいねってヤツ
+        -->
+        <validator name="DoubleNegative" level="warn" />
+        <validator name="FrequentSentenceStart" level="warn" />
+        <validator name="HeaderLength" level="warn" />
+        <validator name="JapaneseAmbiguousNounConjunction" level="warn" />
+        <validator name="JapaneseNumberExpression" level="warn">
+            <property name="mode" value="kansuji" />
+        </validator>
+        <validator name="SuccessiveSentence" level="warn" />
+
+        <!-- Informative Validators
+          これらは、過剰にエラーを出したり、
+          false positive率が高かったりする Validator です。
+
+          出してくる情報が役立つことがあるので、一応設定しておきます。
+        -->
+        <validator name="DoubledWord" level="info">
+            <property name="dict" value="dict/allowDoubled.dic" />
+        </validator>
+        <validator name="JapaneseExpressionVariation" level="info" />
+        <validator name="KatakanaEndHyphen" level="info" />
+        <validator name="KatakanaSpellCheck" level="info"/>
+    </validators>
+
+    <symbols>
+        <!-- workaround for false positive of InvalidSymbol -->
+        <symbol name="BACKSLASH" value="\" />
+    </symbols>
+</redpen-conf>
