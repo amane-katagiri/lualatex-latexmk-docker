@@ -1,30 +1,27 @@
-FROM debian:sid
+FROM alpine
 MAINTAINER Amane Katagiri <amane@ama.ne.jp>
 
+ENV TEXLIVE_TMP /tmp/texlive
+ENV TEXLIVE_PROFILE /tmp/texlive/texlive.profile
 ENV REDPEN_HOME /redpen
 ENV REDPEN_TMP /tmp/redpen
 ENV REDPEN_REPO_TMP /tmp/redpen/repo
-ENV FONT_DIR /usr/share/texmf/fonts
+ENV FONT_DIR /usr/local/texlive/texmf-local/fonts
 ENV FONT_TMP /tmp/font
+ENV PATH $PATH:/usr/local/texlive/2018/bin/x86_64-linuxmusl/
 
-RUN sed -i 's/main/main contrib non-free/g' /etc/apt/sources.list \
-    && apt-get update && apt-get install -y --no-install-recommends \
-        texlive \
-        texlive-lang-japanese \
-        texlive-generic-recommended \
-        texlive-latex-recommended \
-        texlive-fonts-recommended \
-        texlive-extra-utils \
-        texlive-font-utils \
-        texlive-xetex \
-        texlive-luatex \
-        fonts-lmodern \
-        fonts-font-awesome \
-        latexmk \
-        ca-certificates \
-        curl \
-        unzip \
-        maven \
+RUN apk --no-cache add perl wget curl ca-certificates tar unzip maven openjdk8 \
+    && mkdir -p $TEXLIVE_TMP \
+    && echo "selected_scheme scheme-basic" >> $TEXLIVE_PROFILE \
+    && echo "option_doc 0" >> $TEXLIVE_PROFILE \
+    && echo "option_src 0" >> $TEXLIVE_PROFILE \
+    && curl -Ss ftp://tug.org/historic/systems/texlive/2018/install-tl-unx.tar.gz | tar zx -C $TEXLIVE_TMP --strip-components=1 \
+    && echo I | $TEXLIVE_TMP/install-tl --profile=$TEXLIVE_PROFILE \
+    && tlmgr install collection-latex collection-latexrecommended \
+                     collection-luatex luatexbase \
+                     collection-langjapanese \
+                     changepage \
+                     latexmk \
     && mkdir -p $REDPEN_HOME \
     && mkdir -p $REDPEN_TMP \
     && mkdir -p $REDPEN_REPO_TMP \
@@ -55,9 +52,8 @@ RUN sed -i 's/main/main contrib non-free/g' /etc/apt/sources.list \
     && cd $REDPEN_TMP/redpen-japanese-novel-style && ln -s $REDPEN_HOME/lib . && mvn install && cp target/*.jar $REDPEN_HOME/lib/ \
     && cd $REDPEN_TMP/redpen-hankaku-alphabet && ln -s $REDPEN_HOME/lib . && mvn install && cp target/*.jar $REDPEN_HOME/lib/ \
     && mktexlsr \
-    && apt-get autoclean -y \
-    && apt-get clean -y \
-    && rm -rf $FONT_TMP $REDPEN_TMP /var/lib/apt/lists/* \
+    && apk --no-cache del tar unzip \
+    && rm -rf $FONT_TMP $REDPEN_TMP $TEXLIVE_TMP \
     && mkdir /data
 
 COPY data/dict $REDPEN_HOME/dict
@@ -65,4 +61,4 @@ COPY data/conf.xml $REDPEN_HOME/redpen-conf.xml
 COPY data/redpen-runner /bin/redpen-runner
 
 WORKDIR /data
-CMD ["/bin/bash"]
+CMD ["/bin/sh"]
