@@ -10,7 +10,7 @@ ENV FONT_DIR /usr/local/texlive/texmf-local/fonts
 ENV FONT_TMP /tmp/font
 ENV PATH $PATH:/usr/local/texlive/2018/bin/x86_64-linuxmusl/
 
-RUN apk --no-cache add perl wget curl ca-certificates tar unzip maven openjdk8 \
+RUN apk --no-cache add bash perl wget curl ca-certificates tar unzip maven openjdk8 \
     && mkdir -p $TEXLIVE_TMP \
     && echo "selected_scheme scheme-basic" >> $TEXLIVE_PROFILE \
     && echo "option_doc 0" >> $TEXLIVE_PROFILE \
@@ -61,4 +61,4 @@ COPY data/conf.xml $REDPEN_HOME/redpen-conf.xml
 COPY data/redpen-runner /bin/redpen-runner
 
 WORKDIR /data
-CMD ["/bin/sh"]
+CMD ["/bin/bash"]
