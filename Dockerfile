@@ -12,7 +12,7 @@ RUN apk --no-cache add bash findutils perl fontconfig-dev wget curl ca-certifica
     && echo "selected_scheme scheme-basic" >> $TEXLIVE_PROFILE \
     && echo "option_doc 0" >> $TEXLIVE_PROFILE \
     && echo "option_src 0" >> $TEXLIVE_PROFILE \
-    && curl -Ss ftp://tug.org/historic/systems/texlive/2018/install-tl-unx.tar.gz | tar zx -C $TEXLIVE_TMP --strip-components=1 \
+    && curl -Ss ftp://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet/install-tl-unx.tar.gz | tar zx -C $TEXLIVE_TMP --strip-components=1 \
     && echo I | $TEXLIVE_TMP/install-tl --profile=$TEXLIVE_PROFILE \
     && tlmgr install collection-latex collection-luatex luatexbase collection-langjapanese pdfpages \
                      changepage xkeyval etoolbox filehook fontspec ms setspace pdfx xcolor xmpincl latexmk \
