@@ -7,7 +7,7 @@ ENV FONT_DIR /usr/local/texlive/texmf-local/fonts
 ENV FONT_TMP /tmp/font
 ENV PATH /usr/local/texlive/2019/bin/x86_64-linux:$PATH
 
-RUN apk --no-cache add bash findutils perl fontconfig-dev wget curl ca-certificates gzip tar unzip xz \
+RUN apk --no-cache add bash findutils perl fontconfig-dev wget curl ca-certificates ncurses gzip tar unzip xz \
     && mkdir -p $TEXLIVE_TMP \
     && echo "selected_scheme scheme-basic" >> $TEXLIVE_PROFILE \
     && echo "tlpdbopt_install_docfiles 0" >> $TEXLIVE_PROFILE \
@@ -29,7 +29,7 @@ RUN apk --no-cache add bash findutils perl fontconfig-dev wget curl ca-certifica
     && luaotfload-tool -u \
     && fc-cache \
     && mktexlsr \
-    && apk --no-cache del tar unzip \
+    && apk --no-cache del ncurses gzip tar unzip xz \
     && rm -rf $FONT_TMP $TEXLIVE_TMP \
     && mkdir /data
 
