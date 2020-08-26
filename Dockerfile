@@ -24,7 +24,7 @@ RUN apk --no-cache add bash findutils perl fontconfig-dev wget curl ca-certifica
     && curl -Ss -L https://okoneya.jp/font/GenEiGothicN-1.1.zip | gzip -d > $FONT_TMP/gengot.zip \
     && unzip $FONT_TMP/genmin.zip -d $FONT_TMP/genmin \
     && unzip $FONT_TMP/gengot.zip -d $FONT_TMP/gengot \
-    && find $FONT_TMP/genmin -type f -name "*.otf" -print0 | xargs -0 -IXXX mv XXX $FONT_DIR/opentype/gen-ei-koburi-min/ \
+    && find $FONT_TMP/genmin -type f -name "*.ttf" -print0 | xargs -0 -IXXX mv XXX $FONT_DIR/opentype/gen-ei-koburi-min/ \
     && find $FONT_TMP/gengot -type f -name "*.otf" -print0 | xargs -0 -IXXX mv XXX $FONT_DIR/opentype/gen-ei-gothic-n/ \
     && ln -s /usr/local/texlive/texmf-local/fonts/ /usr/share/fonts \
     && luaotfload-tool -u \
