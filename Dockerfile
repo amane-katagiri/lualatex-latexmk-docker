@@ -5,7 +5,7 @@ ENV TEXLIVE_TMP /tmp/texlive
 ENV TEXLIVE_PROFILE /tmp/texlive/texlive.profile
 ENV FONT_DIR /usr/local/texlive/texmf-local/fonts
 ENV FONT_TMP /tmp/font
-ENV PATH /usr/local/texlive/2020/bin/x86_64-linuxmusl:$PATH
+ENV PATH /usr/local/texlive/2021/bin/x86_64-linuxmusl:$PATH
 
 RUN apk --no-cache add bash findutils perl fontconfig-dev wget curl ca-certificates ncurses gzip tar unzip xz \
     && mkdir -p $TEXLIVE_TMP \
@@ -16,7 +16,7 @@ RUN apk --no-cache add bash findutils perl fontconfig-dev wget curl ca-certifica
     && $TEXLIVE_TMP/install-tl --profile=$TEXLIVE_PROFILE \
     && tlmgr install collection-luatex luatexbase collection-langjapanese pdfpages \
                      changepage xkeyval etoolbox filehook fontspec ms setspace pdfx xcolor xmpincl latexmk \
-                     lineno sectionbreak \
+                     lineno sectionbreak light-latex-make everysel \
     && mkdir -p $FONT_TMP \
     && mkdir -p $FONT_DIR/opentype/gen-ei-koburi-min \
     && mkdir -p $FONT_DIR/opentype/gen-ei-gothic-n \
