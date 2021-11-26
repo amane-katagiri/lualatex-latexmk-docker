@@ -16,7 +16,7 @@ RUN apk --no-cache add bash findutils perl fontconfig-dev wget curl ca-certifica
     && $TEXLIVE_TMP/install-tl --profile=$TEXLIVE_PROFILE \
     && tlmgr install collection-luatex luatexbase collection-langjapanese pdfpages \
                      changepage xkeyval etoolbox filehook fontspec ms setspace pdfx xcolor xmpincl latexmk \
-                     lineno sectionbreak light-latex-make everysel everyhook svn-prov \
+                     lineno sectionbreak light-latex-make everysel everyhook svn-prov pdflscape \
     && mkdir -p $FONT_TMP \
     && mkdir -p $FONT_DIR/opentype/gen-ei-koburi-min \
     && mkdir -p $FONT_DIR/opentype/gen-ei-gothic-n \
