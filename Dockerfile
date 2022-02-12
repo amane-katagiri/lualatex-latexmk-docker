@@ -1,4 +1,4 @@
-FROM frolvlad/alpine-glibc
+FROM alpine
 MAINTAINER Amane Katagiri <amane@ama.ne.jp>
 
 ENV TEXLIVE_TMP /tmp/texlive
