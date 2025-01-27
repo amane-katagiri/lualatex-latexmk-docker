@@ -5,7 +5,7 @@ ENV TEXLIVE_TMP /tmp/texlive
 ENV TEXLIVE_PROFILE /tmp/texlive/texlive.profile
 ENV FONT_DIR /usr/local/texlive/texmf-local/fonts
 ENV FONT_TMP /tmp/font
-ENV PATH /usr/local/texlive/2022/bin/x86_64-linuxmusl:$PATH
+ENV PATH /usr/local/texlive/2024/bin/x86_64-linuxmusl:$PATH
 
 RUN apk --no-cache add bash findutils perl fontconfig-dev wget curl ca-certificates ncurses gzip tar unzip xz \
     && mkdir -p $TEXLIVE_TMP \
