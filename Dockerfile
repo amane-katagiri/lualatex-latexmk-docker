@@ -1,11 +1,11 @@
 FROM alpine
-MAINTAINER Amane Katagiri <amane@ama.ne.jp>
+LABEL maintainer="Amane Katagiri <amane@ama.ne.jp>"
 
-ENV TEXLIVE_TMP /tmp/texlive
-ENV TEXLIVE_PROFILE /tmp/texlive/texlive.profile
-ENV FONT_DIR /usr/local/texlive/texmf-local/fonts
-ENV FONT_TMP /tmp/font
-ENV PATH /usr/local/texlive/2024/bin/x86_64-linuxmusl:$PATH
+ENV TEXLIVE_TMP=/tmp/texlive
+ENV TEXLIVE_PROFILE=/tmp/texlive/texlive.profile
+ENV FONT_DIR=/usr/local/texlive/texmf-local/fonts
+ENV FONT_TMP=/tmp/font
+ENV PATH=/usr/local/texlive/2024/bin/x86_64-linuxmusl:$PATH
 
 RUN apk --no-cache add bash findutils perl fontconfig-dev wget curl ca-certificates ncurses gzip tar unzip xz \
     && mkdir -p $TEXLIVE_TMP \
@@ -15,13 +15,13 @@ RUN apk --no-cache add bash findutils perl fontconfig-dev wget curl ca-certifica
     && curl -Ss ftp://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet/install-tl-unx.tar.gz | tar zx -C $TEXLIVE_TMP --strip-components=1 \
     && $TEXLIVE_TMP/install-tl --profile=$TEXLIVE_PROFILE \
     && tlmgr install collection-luatex luatexbase collection-langjapanese pdfpages \
-                     changepage xkeyval etoolbox filehook fontspec ms setspace pdfx xcolor xmpincl latexmk \
+                     changepage xkeyval etoolbox filehook fontspec everyshi setspace pdfx xcolor xmpincl latexmk \
                      lineno sectionbreak light-latex-make everysel everyhook svn-prov pdflscape titlesec \
     && mkdir -p $FONT_TMP \
     && mkdir -p $FONT_DIR/opentype/gen-ei-koburi-min \
     && mkdir -p $FONT_DIR/opentype/gen-ei-gothic-n \
-    && curl -Ss -L https://okoneya.jp/font/GenEiKoburiMin_v6.1.zip | gzip -d > $FONT_TMP/genmin.zip \
-    && curl -Ss -L https://okoneya.jp/font/GenEiGothicN-1.1.zip | gzip -d > $FONT_TMP/gengot.zip \
+    && curl -Ss -L https://okoneya.jp/font/GenEiKoburiMin_v6.1.zip > $FONT_TMP/genmin.zip \
+    && curl -Ss -L https://okoneya.jp/font/GenEiGothicN-1.1.zip > $FONT_TMP/gengot.zip \
     && unzip $FONT_TMP/genmin.zip -d $FONT_TMP/genmin \
     && unzip $FONT_TMP/gengot.zip -d $FONT_TMP/gengot \
     && find $FONT_TMP/genmin -type f -name "*.ttf" -print0 | xargs -0 -IXXX mv XXX $FONT_DIR/opentype/gen-ei-koburi-min/ \
